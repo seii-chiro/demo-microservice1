@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www
+    networks:
+      - app-network
+
+  backend-nginx:
+    image: nginx:alpine
+    volumes:
+      - .:/var/www
+      - ./backend-nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
